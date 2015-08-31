@@ -1,0 +1,11 @@
+<script>
+  function setup(gl, spec) {
+
+  spec.FragmentColor = function() {
+  var xy = this.varyings.texCoord; 
+  return [xy[0], xy[1], 0]; 
+  }
+  
+  };
+</script>
+<script src="headlessTestRunner.bundle.js"></script>

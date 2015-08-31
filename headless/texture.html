@@ -1,0 +1,53 @@
+<script>
+function setup(gl, spec) {
+	gl.getExtension('OES_texture_float');
+	var width = gl.drawingBufferWidth;
+	var height = gl.drawingBufferHeight;
+
+	var pixels = new Float32Array(height*width*4);
+	var pixIdx = 0;
+
+	for(var y = 0; y < height; y++) {
+	    for(var x = 0; x < width; x++) {
+		    pixels[pixIdx + 0] = Math.abs(Math.cos(x*y/1000)); 
+		    pixels[pixIdx + 1] = Math.abs(Math.sin(x*y/1000)); 
+		    pixels[pixIdx + 2] = Math.abs(Math.cos(x/(y+0.0001))); 
+		    pixels[pixIdx + 3] = 1.0;
+		    pixIdx += 4; 
+	    }
+	}
+
+	var tex = gl.createTexture();
+	gl.bindTexture(gl.TEXTURE_2D, tex);
+	gl.texImage2D(gl.TEXTURE_2D,
+		0,
+		gl.RGBA,
+		width,
+		height,
+		0, 
+		gl.RGBA,
+		gl.FLOAT,
+		pixels
+	);				
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); 
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+	gl.bindTexture(gl.TEXTURE_2D, null);
+	
+	spec.FragmentColor = function(builtIns) {
+		var xy = this.varyings.texCoord; 
+		return builtIns.texture2D(this.uniforms.texture, xy);
+	}
+	
+	var program = spec.GetProgram(gl); 
+	gl.useProgram(program);
+	gl.activeTexture(gl.TEXTURE0);
+	gl.bindTexture(gl.TEXTURE_2D, tex);
+	gl.uniform1i(gl.getUniformLocation(program, "texture"), 0);
+			       
+	spec.uniforms = { texture: new js2glsl.Sampler2D(pixels, width, height) }; 
+
+};
+</script>
+<script src="headlessTestRunner.bundle.js"></script>

@@ -1,0 +1,16 @@
+<script>
+  function setup(gl, spec) {
+	  gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+	  spec.FragmentColor = function(builtIns) {
+		  var xy = this.varyings.texCoord; 
+		  return [
+			  Math.abs(Math.cos(Math.cos(xy[0]) + Math.sin(xy[1]) + builtIns.clamp(Math.tan(xy[0]*xy[1]), 0, 1))),
+			  Math.abs(Math.sin(Math.sqrt(Math.exp(Math.acos(Math.asin(Math.log(xy[0]*xy[1]))))))),
+			  Math.max(Math.min(xy[0]*xy[1]%1, .80), .2),
+			  Math.abs(Math.cos(Math.atan2(xy[0], xy[1]) * Math.atan(Math.ceil(Math.floor(Math.pow(xy[0]/xy[1],2.5)))))),
+		  ];
+	  }
+	  
+  };
+</script>
+<script src="headlessTestRunner.bundle.js"></script>

@@ -1,0 +1,31 @@
+{
+  "name": "js2glsl-test",
+  "version": "0.1.0",
+  "description": "Test suite for js2glsl. It contains images so it isn't included in the main repo",
+  "scripts": {
+    "test": "gulp"
+  },
+  "author": "Justin Berger",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jdavidberger/js2glsl-test"
+  },
+  "dependencies": {
+    "browserify": "^11.0.1",
+    "gl-shader": "^4.0.5",
+    "glsl-parser": "^2.0.0",
+    "glsl-tokenizer": "^2.0.2",
+    "gulp": "^3.9.0",
+    "gulp-shell": "^0.4.3",
+    "gulp-uglify": "^1.4.0",
+    "image-diff": "^1.2.0",
+    "js2glsl": "git://github.com/jdavidberger/js2glsl",
+    "mocha": "^2.2.5",
+    "png-diff": "^0.3.1",
+    "slimerjs": "^0.9.6",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "devDependencies": {}
+}
